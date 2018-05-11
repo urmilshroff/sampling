@@ -1,4 +1,29 @@
 import math
+from scipy import stats
+
+def los_calc_z(los):
+    if(los==5): #WET
+        if(tails==2):
+            return z_a=1.96
+        else:
+            return z_a=1.65
+    elif(los==1):
+        if(tails==2):
+            return z_a=2.58
+        else:
+            return z_a=2.33
+
+def los_calc_t(los,n,num):
+    if(num==1):
+        return stats.t.ppf((1-(los/100)),n)
+
+    elif(num==2):
+        return stats.t.ppf((1-(los/100)),n)
+
+    #double population: t(n1+n2-2,t_a)
+
+
+
 
 def large_sample(num,n1,n2):
     if(num==1):
@@ -7,19 +32,10 @@ def large_sample(num,n1,n2):
         x=float(input("Enter mean of the Sample:\n"))
         u=float(input("Enter mean of the Population:\n"))
         sd=float(input("Enter the standard deviation:\n"))
-        los=float(input("Enter the Level of Significance:\n"))
+        z_a=los_calc_z(int(input("Enter the Level Of Significance:\n")))
         tails=int(input("Is the hypothesis one tailed or two tailed?\n"))
 
-        if(los==5): #WET
-            if(tails==2):
-                z_a=1.96
-            else:
-                z_a=1.65
-        elif(los==1):
-            if(tails==2):
-                z_a=2.58
-            else:
-                z_a=2.33
+
 
         z=((x-u)/(sd/math.sqrt(n)))
         print("z =",z)
@@ -44,19 +60,10 @@ def large_sample(num,n1,n2):
         #fix later
         u=float(input("Enter mean of the Population:\n"))
         sd=float(input("Enter the standard deviation:\n"))
-        los=float(input("Enter the Level of Significance:\n"))
+        z_a=los_calc_z(int(input("Enter the Level Of Significance:\n")))
         tails=int(input("Is the hypothesis one tailed or two tailed?\n"))
 
-        if(los==5):
-            if(tails==2):
-                z_a=1.96
-            else:
-                z_a=1.65
-        elif(los==1):
-            if(tails==2):
-                z_a=2.58
-            else:
-                z_a=2.33
+
 
     else:
         print("Error, only 1 or 2 Samples allowed!")
@@ -80,6 +87,14 @@ def get_data(num):
         large_sample()
     else:
         small_sample()
+
+
+
+
+
+
+
+
 
 
 print("\nTesting of Hypothesis by Urmil Shroff\n")
