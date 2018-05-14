@@ -1,26 +1,27 @@
 import math
 from scipy import stats
 
-def los_calc_z(los):
-    if(los==5): #WET
+
+def los_calc_z(los): #LOS calculator for z-test
+    if(los==5):
         if(tails==2):
-            return z_a=1.96
+            return z_a=1.96 #two-tailed @ 5% LOS
         else:
-            return z_a=1.65
+            return z_a=1.65 #one-tailed @ 5% LOS
+
     elif(los==1):
         if(tails==2):
-            return z_a=2.58
+            return z_a=2.58 #two-tailed @ 1% LOS
         else:
-            return z_a=2.33
+            return z_a=2.33 #one-tailed @ 1% LOS
 
-def los_calc_t(los,n,num):
+
+def los_calc_t(los,n,num): #LOS calculator for t-test
     if(num==1):
         return stats.t.ppf((1-(los/100)),n)
 
     elif(num==2):
-        return stats.t.ppf((1-(los/100)),n)
-
-    #double population: t(n1+n2-2,t_a)
+        #double population: t(n1+n2-2,t_a)
 
 
 
@@ -99,20 +100,20 @@ def get_data(num):
 
 print("\nTesting of Hypothesis by Urmil Shroff\n")
 
-if(int(input("Enter the number of Samples:\n"))==1):
-    n=float(input("Enter the size of the Sample:\n"))
+if(int(input("Enter number of Samples:\n"))==1):
+    n=float(input("Enter size of the Sample:\n"))
 
     if (n>=30):
-        large_sample(1,n,0)
+        large_sample(1,n,0) #large sample single
     else:
-        small_sample(1,n,0)
+        small_sample(1,n,0) #small sample single
 
 else:
-    n1=float(input("Enter the size of the first Sample:\n"))
-    n2=float(input("Now enter the size of the second Sample:\n"))
+    n1=float(input("Enter size of the first Sample:\n"))
+    n2=float(input("Enter size of the second Sample:\n"))
 
     if (n1>=30) and (n2>=30):
-        large_sample(2,n1,n2)
+        large_sample(2,n1,n2) #large sample double
 
     else:
-        small_sample(2,n1,n2)
+        small_sample(2,n1,n2) #small sample double
