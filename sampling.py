@@ -52,9 +52,9 @@ def large_sample(num,n1,n2):
             z=-z
 
         if(z>z_a):
-            print("Null hypothesis rejected, alternate hypothesis accepted!")
+            print("\nNull hypothesis rejected, alternate hypothesis accepted!\n")
         elif(z<z_a):
-            print("Null hypothesis accepted, alternate hypothesis rejected!")
+            print("\nNull hypothesis accepted, alternate hypothesis rejected!\n")
 
 
 
@@ -104,9 +104,9 @@ def large_sample(num,n1,n2):
         print("\nZ =",z,"\nZa =",z_a)
 
         if(z>z_a):
-            print("Null hypothesis rejected, alternate hypothesis accepted!")
+            print("\nNull hypothesis rejected, alternate hypothesis accepted!\n")
         elif(z<z_a):
-            print("Null hypothesis accepted, alternate hypothesis rejected!")
+            print("\nNull hypothesis accepted, alternate hypothesis rejected!\n")
 
     else:
         print("Error, only 1 or 2 Samples can be predicted!")
@@ -132,9 +132,9 @@ def small_sample(num,n1,n2):
         print("\nT =",t,"\nTa =",t_a)
 
         if(t>t_a):
-            print("Null hypothesis rejected, alternate hypothesis accepted!")
+            print("\nNull hypothesis rejected, alternate hypothesis accepted!\n")
         elif(t<t_a):
-            print("Null hypothesis accepted, alternate hypothesis rejected!")
+            print("\nNull hypothesis accepted, alternate hypothesis rejected!\n")
 
 
     elif(num==2):
@@ -158,7 +158,7 @@ def get_data():
         else:
             small_sample(1,n,0) #single small sample
 
-    elif (n==2):
+    elif (num==2):
         n1=float(input("Enter size of the first Sample:\n"))
         n2=float(input("Enter size of the second Sample:\n"))
 
