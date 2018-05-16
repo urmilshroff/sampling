@@ -46,7 +46,7 @@ def large_sample(num,n1,n2):
         z_a=los_calc_z(int(input("Enter LOS:\n")),int(input("Is the hypothesis one tailed or two tailed?\n")))
 
         z=((x-u)/(sd/math.sqrt(n)))
-        print("Z =",z,"Za =",z_a)
+        print("\nZ =",z,"\nZa =",z_a)
 
         if(z<0):
             z=-z
@@ -100,6 +100,8 @@ def large_sample(num,n1,n2):
 
         if(z<0):
             z=-z
+        
+        print("\nZ =",z,"\nZa =",z_a)
 
         if(z>z_a):
             print("Null hypothesis rejected, alternate hypothesis accepted!")
@@ -126,6 +128,8 @@ def small_sample(num,n1,n2):
 
         if(t<0):
             t=-t
+
+        print("\nT =",t,"\nTa =",t_a)
 
         if(t>t_a):
             print("Null hypothesis rejected, alternate hypothesis accepted!")
