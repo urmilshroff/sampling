@@ -22,16 +22,16 @@ def los_calc_t(los,n,num): #LOS calculator for t-test (used for Small Samples)
 
     elif(num==2):
         print("Haha")
-        #double population: t(n1+n2-2,t_a)
+        #small double population: t(n1+n2-2,t_a)
 
 
-def case1(n1,n2,x1,x2,s1,s2): #population sds not known, so we take s1, s2
+def case_z1(n1,n2,x1,x2,s1,s2): #population sds not known, so we take s1, s2
     return ((x1-x2)/(math.sqrt(((s1**2)/n1)+((s2**2)/n2))))
 
-def case2(n1,n2,x1,x2,popsd): #population sds are known and they are the same
+def case_z2(n1,n2,x1,x2,popsd): #population sds are known and they are the same
     return ((x1-x2)/(popsd*(math.sqrt((1/n1)+(1/n2)))))
 
-def case3(n1,n2,x1,x2,s1,s2): #population sds not known but they are said to be the same
+def case_z3(n1,n2,x1,x2,s1,s2): #population sds not known but they are said to be the same
     return ((x1-x2)/(math.sqrt(((s1**2)/n2)+((s2**2)/n1))))
 
 
@@ -73,7 +73,7 @@ def large_sample(num,n1,n2):
 
                 popsd=float(input("Enter common SD of the Populations:\n"))
 
-                z=case2(n1,n2,x1,x2,popsd)
+                z=case_z2(n1,n2,x1,x2,popsd)
 
             else: #case 3
 
@@ -83,7 +83,7 @@ def large_sample(num,n1,n2):
                 s1=float(input("Enter SD of the first Sample/Population:\n"))
                 s2=float(input("Enter SD of the second Sample/Population:\n"))
 
-                z=case3(n1,n2,x1,x2,s1,s2)
+                z=case_z3(n1,n2,x1,x2,s1,s2)
 
         else: #case 1
 
@@ -93,7 +93,7 @@ def large_sample(num,n1,n2):
             s1=float(input("Enter SD of the first Sample/Population:\n"))
             s2=float(input("Enter SD of the second Sample/Population:\n"))
 
-            z=case1(n1,n2,x1,x2,s1,s2)
+            z=case_z1(n1,n2,x1,x2,s1,s2)
 
 
         z_a=los_calc_z(int(input("Enter LOS:\n")),int(input("Is the hypothesis one tailed or two tailed?\n")))
@@ -115,6 +115,24 @@ def small_sample(num,n1,n2):
     if(num==1):
         print("\nSmall Sample Test (one Sample)")
 
+        x=float(input("Enter mean of the Sample:\n"))
+        u=float(input("Enter mean of the Population:\n"))
+        sd=float(input("Enter Standard Deviation:\n"))
+
+        t_a=los_calc_t(int(input("Enter LOS:\n")),n1-1,num) #copy paste in num==2 condition
+
+        z=((x-u)/(sd/math.sqrt(n)))
+        print("Z =",z,"Za =",z_a)
+
+        if(z<0):
+            z=-z
+
+        if(z>z_a):
+            print("Null hypothesis rejected, alternate hypothesis accepted!")
+        elif(z<z_a):
+            print("Null hypothesis accepted, alternate hypothesis rejected!")
+
+
     elif(num==2):
         print("\nSmall Sample Test (two Samples)")
 
@@ -124,9 +142,9 @@ def small_sample(num,n1,n2):
 
 
 def get_data():
-    n=int(input("Enter number of Samples:\n"))
+    num=int(input("Enter number of Samples:\n"))
 
-    if (n==1):
+    if (num==1):
         n=float(input("Enter size of the Sample:\n"))
 
         if (n>=30):
