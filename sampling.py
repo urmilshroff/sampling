@@ -21,8 +21,8 @@ def los_calc_t(los,n,num): #LOS calculator for t-test (used for Small Samples)
         return stats.t.ppf((1-(los/100)),n)
 
     elif(num==2):
-        print("Haha")
-        #small double population: t(n1+n2-2,t_a)
+        print("wtf how did you call me?")
+        #small double population formula: t(n1+n2-2,t_a)
 
 
 def case_z1(n1,n2,x1,x2,s1,s2): #population sds not known, so we take s1, s2
@@ -38,7 +38,7 @@ def case_z3(n1,n2,x1,x2,s1,s2): #population sds not known but they are said to b
 def large_sample(num,n1,n2):
     if(num==1): #single large sample
         print("\nLarge Sample Test (one Sample)")
-
+        n=n1
         x=float(input("Enter mean of the Sample:\n"))
         u=float(input("Enter mean of the Population:\n"))
         sd=float(input("Enter Standard Deviation:\n"))
@@ -114,27 +114,29 @@ def large_sample(num,n1,n2):
 def small_sample(num,n1,n2):
     if(num==1):
         print("\nSmall Sample Test (one Sample)")
-
+        n=n1
         x=float(input("Enter mean of the Sample:\n"))
         u=float(input("Enter mean of the Population:\n"))
         sd=float(input("Enter Standard Deviation:\n"))
 
-        t_a=los_calc_t(int(input("Enter LOS:\n")),n1-1,num) #copy paste in num==2 condition
+        t_a=los_calc_t(int(input("Enter LOS:\n")),n-1,num) #copy paste in num==2 condition below
 
-        z=((x-u)/(sd/math.sqrt(n)))
-        print("Z =",z,"Za =",z_a)
+        t=((x-u)/(sd/math.sqrt(n-1)))
+        print("T =",t,"Ta =",t_a)
 
-        if(z<0):
-            z=-z
+        if(t<0):
+            t=-t
 
-        if(z>z_a):
+        if(t>t_a):
             print("Null hypothesis rejected, alternate hypothesis accepted!")
-        elif(z<z_a):
+        elif(t<t_a):
             print("Null hypothesis accepted, alternate hypothesis rejected!")
 
 
     elif(num==2):
         print("\nSmall Sample Test (two Samples)")
+        print("\nNot coded yet")
+
 
     else:
         print("Error, only 1 or 2 Samples can be predicted!")
