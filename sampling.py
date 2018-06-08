@@ -1,3 +1,5 @@
+#Testing of Hypothesis by Urmil Shroff
+
 import math
 from scipy import stats
 
@@ -20,8 +22,8 @@ def los_calc_t(los,n,num): #LOS calculator for t-test (used for Small Samples)
     if(num==1):
         return stats.t.ppf((1-(los/100)),n)
 
-    elif(num==2):
-        print("wtf how did you call me?")
+    elif(num==2): #TODO: fix this
+        print("WTF how did you call me?")
         #small double population formula: t(n1+n2-2,t_a)
 
 
@@ -100,7 +102,7 @@ def large_sample(num,n1,n2):
 
         if(z<0):
             z=-z
-        
+
         print("\nZ =",z,"\nZa =",z_a)
 
         if(z>z_a):
@@ -137,9 +139,8 @@ def small_sample(num,n1,n2):
             print("\nNull hypothesis accepted, alternate hypothesis rejected!\n")
 
 
-    elif(num==2):
-        print("\nSmall Sample Test (two Samples)")
-        print("\nNot coded yet")
+    elif(num==2): # TODO: fix this
+        print("\nSorry, this doesn't work yet :(")
 
 
     else:
@@ -147,7 +148,7 @@ def small_sample(num,n1,n2):
 
 
 
-def get_data():
+def start():
     num=int(input("Enter number of Samples:\n"))
 
     if (num==1):
@@ -172,4 +173,4 @@ def get_data():
 
 print("\nTesting of Hypothesis by Urmil Shroff\n")
 
-get_data()
+start()
