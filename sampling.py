@@ -1,40 +1,35 @@
 #Testing of Hypothesis by Urmil Shroff
 
-import math
-from scipy import stats
+try:
+    import math
+    from scipy import stats
+
+except ImportError:
+    print("\n***WARNING: THIS PROGRAM MAY NOT RUN CORRECTLY***\n\n1. Please make sure you have properly installed Python 3.6 from www.python.org\n2. After doing so, run 'python' in terminal\n3. Then type: 'pip install scipy'\n4. Now try again! If the problem still persists, close your computer and go back to sleep.")
 
 
-def los_calc_z(los,tails): #LOS calculator for z-test (used for Large Samples)
-    if(los==5):
-        if(tails==2):
-            return 1.96 #two-tailed @ 5% LOS
+def start():
+    num=int(input("Enter number of Samples:\n"))
+
+    if (num==1):
+        n=float(input("Enter size of the Sample:\n"))
+
+        if (n>=30):
+            large_sample(1,n,0) #single large sample
         else:
-            return 1.65 #one-tailed @ 5% LOS
+            small_sample(1,n,0) #single small sample
 
-    elif(los==1):
-        if(tails==2):
-            return 2.58 #two-tailed @ 1% LOS
+    elif (num==2):
+        n1=float(input("Enter size of the first Sample:\n"))
+        n2=float(input("Enter size of the second Sample:\n"))
+
+        if (n1>=30) and (n2>=30):
+            large_sample(2,n1,n2) #double large sample
         else:
-            return 2.33 #one-tailed @ 1% LOS
+            small_sample(2,n1,n2) #double small sample
 
-
-def los_calc_t(los,n,num): #LOS calculator for t-test (used for Small Samples)
-    if(num==1):
-        return stats.t.ppf((1-(los/100)),n)
-
-    elif(num==2): #TODO: fix this
-        print("WTF how did you call me?")
-        #small double population formula: t(n1+n2-2,t_a)
-
-
-def case_z1(n1,n2,x1,x2,s1,s2): #population sds not known, so we take s1, s2
-    return ((x1-x2)/(math.sqrt(((s1**2)/n1)+((s2**2)/n2))))
-
-def case_z2(n1,n2,x1,x2,popsd): #population sds are known and they are the same
-    return ((x1-x2)/(popsd*(math.sqrt((1/n1)+(1/n2)))))
-
-def case_z3(n1,n2,x1,x2,s1,s2): #population sds not known but they are said to be the same
-    return ((x1-x2)/(math.sqrt(((s1**2)/n2)+((s2**2)/n1))))
+    else:
+        print("Sorry, only one or two samples can be tested!")
 
 
 def large_sample(num,n1,n2):
@@ -57,7 +52,6 @@ def large_sample(num,n1,n2):
             print("\nNull hypothesis rejected, alternate hypothesis accepted!\n")
         elif(z<z_a):
             print("\nNull hypothesis accepted, alternate hypothesis rejected!\n")
-
 
 
     elif(num==2): #double large sample
@@ -114,7 +108,6 @@ def large_sample(num,n1,n2):
         print("Error, only 1 or 2 Samples can be predicted!")
 
 
-
 def small_sample(num,n1,n2):
     if(num==1):
         print("\nSmall Sample Test (one Sample)")
@@ -123,10 +116,8 @@ def small_sample(num,n1,n2):
         u=float(input("Enter mean of the Population:\n"))
         sd=float(input("Enter Standard Deviation:\n"))
 
-        t_a=los_calc_t(int(input("Enter LOS:\n")),n-1,num) #copy paste in num==2 condition below
-
+        t_a=los_calc_t(int(input("Enter LOS:\n")),n-1,num)
         t=((x-u)/(sd/math.sqrt(n-1)))
-        print("T =",t,"Ta =",t_a)
 
         if(t<0):
             t=-t
@@ -140,37 +131,44 @@ def small_sample(num,n1,n2):
 
 
     elif(num==2): # TODO: fix this
-        print("\nSorry, this doesn't work yet :(")
-
+        print("\nSorry, small sample testing for two samples doesn't work yet! Submit a pull request if you can use SciPy to make it work.")
 
     else:
         print("Error, only 1 or 2 Samples can be predicted!")
 
 
-
-def start():
-    num=int(input("Enter number of Samples:\n"))
-
-    if (num==1):
-        n=float(input("Enter size of the Sample:\n"))
-
-        if (n>=30):
-            large_sample(1,n,0) #single large sample
+def los_calc_z(los,tails): #LOS calculator for z-test (used for Large Samples)
+    if(los==5):
+        if(tails==2):
+            return 1.96 #two-tailed @ 5% LOS
         else:
-            small_sample(1,n,0) #single small sample
+            return 1.65 #one-tailed @ 5% LOS
 
-    elif (num==2):
-        n1=float(input("Enter size of the first Sample:\n"))
-        n2=float(input("Enter size of the second Sample:\n"))
-
-        if (n1>=30) and (n2>=30):
-            large_sample(2,n1,n2) #double large sample
+    elif(los==1):
+        if(tails==2):
+            return 2.58 #two-tailed @ 1% LOS
         else:
-            small_sample(2,n1,n2) #double small sample
+            return 2.33 #one-tailed @ 1% LOS
 
-    else:
-        print("Sorry, only one or two samples can be tested!")
+
+def los_calc_t(los,n,num): #LOS calculator for t-test (used for Small Samples)
+    if(num==1):
+        return stats.t.ppf((1-(los/100)),n)
+
+    elif(num==2): #TODO: fix this
+        print("WTF how did you call me?")
+        #small double population formula: t(n1+n2-2,t_a)
+
+
+def case_z1(n1,n2,x1,x2,s1,s2): #population sds not known, so we take s1, s2
+    return ((x1-x2)/(math.sqrt(((s1**2)/n1)+((s2**2)/n2))))
+
+def case_z2(n1,n2,x1,x2,popsd): #population sds are known and they are the same
+    return ((x1-x2)/(popsd*(math.sqrt((1/n1)+(1/n2)))))
+
+def case_z3(n1,n2,x1,x2,s1,s2): #population sds not known but they are said to be the same
+    return ((x1-x2)/(math.sqrt(((s1**2)/n2)+((s2**2)/n1))))
+
 
 print("\nTesting of Hypothesis by Urmil Shroff\n")
-
 start()
